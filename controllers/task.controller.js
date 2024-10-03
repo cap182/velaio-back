@@ -5,11 +5,12 @@ import Task from "../models/task.model.js";
 
 export const createTask = async (req, res) => {
     try {
-        const { title } = req.body;
+        // const { title } = req.body;
+        const createData = req.body;
 
         console.log('a ver', req.body);
-        const taskId = title.replaceAll(' ', '') + Date.now()
-        const newTask = new Task({ taskId, ...req.body });
+        createData.taskId = createData.title.replaceAll(' ', '') + Date.now()
+        const newTask = new Task(createData);
         await newTask.save();
 
         return res.status(201).json({ message: 'Tarea creada exitosamente', task: newTask });
